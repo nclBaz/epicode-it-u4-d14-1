@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedQuery(name = "findByName", query = "SELECT d FROM Dog d WHERE d.name = :name")
 public class Dog extends Animal {
 	private double maxSpeed;
 	private String breed;

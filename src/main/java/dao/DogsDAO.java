@@ -1,10 +1,12 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entities.Dog;
 import lombok.extern.slf4j.Slf4j;
@@ -50,5 +52,11 @@ public class DogsDAO {
 		int numCancellati = q.executeUpdate();
 		t.commit();
 		return numCancellati;
+	}
+
+	public List<Dog> findByName(String name) {
+		TypedQuery<Dog> q = em.createNamedQuery("findByName", Dog.class);
+		q.setParameter("name", name);
+		return q.getResultList();
 	}
 }
