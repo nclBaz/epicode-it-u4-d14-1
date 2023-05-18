@@ -7,6 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import entities.Dog;
 import lombok.extern.slf4j.Slf4j;
@@ -58,5 +62,24 @@ public class DogsDAO {
 		TypedQuery<Dog> q = em.createNamedQuery("findByName", Dog.class);
 		q.setParameter("name", name);
 		return q.getResultList();
+	}
+	
+	public List<Dog> findByNameAndAgeWithCriteria(String name, int age){
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Dog> crQ = cb.createQuery(Dog.class);
+		
+		Root<Dog> dog = crQ.from(Dog.class); // riferimento all'entity Dog --> FROM Dog dog
+		
+		// Filters
+		Predicate nameStartsWith = cb.like(dog.get("name"), name + "%");
+		Predicate ageLowerThan = cb.lt(dog.get("age"), age);
+
+		// aggiungo SELECT dog FROM Dog dog WHERE filters ORDER BY name DESC
+		crQ.select(dog).where(cb.and(nameStartsWith, ageLowerThan)).orderBy(cb.desc(dog.get("name")));
+		
+		TypedQuery<Dog> query = em.createQuery(crQ);
+
+		return query.getResultList();
 	}
 }

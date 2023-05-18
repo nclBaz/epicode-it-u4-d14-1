@@ -46,8 +46,14 @@ public class Application {
 		if (tom != null)
 			log.info(tom.toString());
 
+		// ***************************** JPQL UPDATE & DELETE *******************
+
 		dd.findByIdAndUpdate("3fd76be0-992c-4bf3-9c57-69956fdc4059", "Giorgio");
 		dd.findByIdAndDelete("3fd76be0-992c-4bf3-9c57-69956fdc4059");
+
+		// ***************************** CRITERIA API ***************************
+		log.info("******************************** CRITERIA API ************************");
+		dd.findByNameAndAgeWithCriteria("F", 5).stream().forEach(dog -> log.info(dog.toString()));
 
 		em.close();
 		emf.close();
