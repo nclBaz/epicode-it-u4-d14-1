@@ -3,6 +3,11 @@ package app;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.AnimalsDAO;
+import dao.CatsDAO;
+import dao.DogsDAO;
+import entities.Cat;
+import entities.Dog;
 import lombok.extern.slf4j.Slf4j;
 import utils.JpaUtil;
 
@@ -13,8 +18,28 @@ public class Application {
 	public static void main(String[] args) {
 
 		EntityManager em = emf.createEntityManager();
+		CatsDAO cd = new CatsDAO(em);
+		DogsDAO dd = new DogsDAO(em);
+		AnimalsDAO ad = new AnimalsDAO(em);
 
-		log.info("CIAO");
+		// *************************** SINGLE TABLE ********************
+//		Cat tom = new Cat("Tom", 5, 2.0);
+//		Dog fido = new Dog("Fido", 3, 20.0, "Pastore Tedesco");
+//		ad.saveAnimal(fido);
+//		ad.saveAnimal(tom);
+
+//		cd.saveCat(tom);
+//		dd.saveDog(fido);
+		Cat tom = (Cat) ad.findById("0bdc7889-2a9d-4f18-9df7-58880f205e3b");
+		Dog fido = (Dog) ad.findById("10744556-0e47-4e90-a193-b3552004711d");
+		log.info(tom.toString());
+		log.info(fido.toString());
+
+		log.info("*********************** FIND ALL *********************");
+		ad.findAll().stream().forEach(animal -> log.info(animal.toString()));
+
+		log.info("*********************** FIND ALL CATS *********************");
+		cd.findAllCats().stream().forEach(cat -> log.info(cat.toString()));
 
 		em.close();
 		emf.close();
