@@ -2,23 +2,22 @@ package entities;
 
 import java.util.UUID;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Entity
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 // @DiscriminatorColumn(name = "animal_type")
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Animal {
+public class Animal {
 	@Id
 	@GeneratedValue
 	private UUID id;

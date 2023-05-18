@@ -40,11 +40,14 @@ public class Application {
 //
 //		log.info("*********************** FIND ALL CATS *********************");
 
-//		cd.findAllCats().stream().forEach(cat -> log.info(cat.toString()));
-//		ad.findAll().stream().forEach(a -> log.info(a.toString()));
+		cd.findAllCats().stream().forEach(cat -> log.info(cat.toString()));
+		// ad.findAll().stream().forEach(a -> log.info(a.toString()));
 		// Cat tom = (Cat) ad.findById("d1d4c1ca-7591-4837-a397-68200f85e826");
 		if (tom != null)
 			log.info(tom.toString());
+
+		dd.findByIdAndUpdate("3fd76be0-992c-4bf3-9c57-69956fdc4059", "Giorgio");
+		dd.findByIdAndDelete("3fd76be0-992c-4bf3-9c57-69956fdc4059");
 
 		em.close();
 		emf.close();
